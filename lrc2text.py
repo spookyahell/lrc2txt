@@ -8,8 +8,12 @@ if len(sys.argv) == 2:
 	fname = sys.argv[1]
 	if path.isfile(fname):
 		if fname.endswith('.lrc'):
-			lfile = open(fname,'r', encoding='utf16') 
-			lines = lfile.readlines()
+			try:
+				lfile = open(fname,'r', encoding='utf16') 
+				lines = lfile.readlines()
+			except UnicodeError:
+				lfile = open(fname,'r', encoding='utf-8-sig') 
+				lines = lfile.readlines()
 			cleanlines = list(map(str.strip, lines))
 			
 			ofname = fname[:-3]+'-lrc2.txt'
